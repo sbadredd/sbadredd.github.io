@@ -1,115 +1,130 @@
 ---
 ---
-
-@string{aps = {American Physical Society,}}
-
-@book{einstein1920relativity,
-  title={Relativity: the Special and General Theory},
-  author={Einstein, Albert},
-  year={1920},
-  publisher={Methuen & Co Ltd},
-  html={relativity.html}
+@inproceedings{uller2024,
+  abbr = {NeSy (SPOTLIGHT)},
+  title = {ULLER: A Unified Language for Learning and Reasoning},
+  author = {{van Krieken}, Emile and Badreddine, Samy and Manhaeve, Robin and
+            Giunchiglia, Eleonora },
+  booktitle = {18th International Conference on Neural-Symbolic Learning and
+               Reasoning},
+  year = {2024},
+  eprint = {2404.08458},
+  eprinttype = {arxiv},
+  selected = {true},
+  abstract = {The field of neuro-symbolic artificial intelligence (NeSy), which
+              combines learning and reasoning, has recently experienced
+              significant growth. There now are a wide variety of NeSy frameworks
+              , each with its own specific language for expressing background
+              knowledge and how to relate it to neural networks. This
+              heterogeneity hinders accessibility for newcomers and makes
+              comparing different NeSy frameworks challenging. We propose a
+              unified language for NeSy, which we call ULLER, a Unified Language
+              for LEarning and Reasoning. ULLER encompasses a wide variety of
+              settings, while ensuring that knowledge described in it can be used
+              in existing NeSy systems. ULLER has a neuro-symbolic first-order
+              syntax for which we provide example semantics including classical,
+              fuzzy, and probabilistic logics. We believe ULLER is a first step
+              towards making NeSy research more accessible and comparable, paving
+              the way for libraries that streamline training and evaluation
+              across a multitude of semantics, knowledge bases, and NeSy systems.
+              },
+  arxiv = {2404.08458},
 }
 
-@book{einstein1956investigations,
-  bibtex_show={true},
-  title={Investigations on the Theory of the Brownian Movement},
-  author={Einstein, Albert},
-  year={1956},
-  publisher={Courier Corporation},
-  preview={brownian-motion.gif}
+@article{badreddine2019injecting,
+  abbr = {NeSy},
+  title={Injecting prior knowledge for transfer learning into reinforcement learning algorithms using logic tensor networks},
+  author={Badreddine, Samy and Spranger, Michael},
+  journal={arXiv preprint arXiv:1906.06576},
+  year={2019}
 }
 
-@article{einstein1950meaning,
-  abbr={AJP},
-  bibtex_show={true},
-  title={The meaning of relativity},
-  author={Einstein, Albert and Taub, AH},
-  journal={American Journal of Physics},
-  volume={18},
-  number={6},
-  pages={403--404},
-  year={1950},
-  publisher={American Association of Physics Teachers}
-}
-
-@article{PhysRev.47.777,
-  abbr={PhysRev},
-  title={Can Quantum-Mechanical Description of Physical Reality Be Considered Complete?},
-  author={Einstein*†, A. and Podolsky*, B. and Rosen*, N.},
-  abstract={In a complete theory there is an element corresponding to each element of reality. A sufficient condition for the reality of a physical quantity is the possibility of predicting it with certainty, without disturbing the system. In quantum mechanics in the case of two physical quantities described by non-commuting operators, the knowledge of one precludes the knowledge of the other. Then either (1) the description of reality given by the wave function in quantum mechanics is not complete or (2) these two quantities cannot have simultaneous reality. Consideration of the problem of making predictions concerning a system on the basis of measurements made on another system that had previously interacted with it leads to the result that if (1) is false then (2) is also false. One is thus led to conclude that the description of reality as given by a wave function is not complete.},
-  journal={Phys. Rev.},
-  location={New Jersey},
-  volume={47},
-  issue={10},
-  pages={777--780},
-  numpages={0},
-  year={1935},
-  month={May},
-  publisher=aps,
-  doi={10.1103/PhysRev.47.777},
-  url={http://link.aps.org/doi/10.1103/PhysRev.47.777},
-  html={https://journals.aps.org/pr/abstract/10.1103/PhysRev.47.777},
-  pdf={example_pdf.pdf},
-  altmetric={248277},
-  dimensions={true},
-  google_scholar_id={qyhmnyLat1gC},
-  video={https://www.youtube-nocookie.com/embed/aqz-KE-bpKQ},
-  additional_info={. *More Information* can be [found here](https://github.com/alshedivat/al-folio/)},
-  annotation={* Example use of superscripts<br>† Albert Einstein},
+@article{badreddine2022logic,
+  abbr={AI Journal},
+  title={Logic tensor networks},
+  author={Badreddine, Samy and Garcez, Artur d'Avila and Serafini, Luciano and Spranger, Michael},
+  journal={Artificial Intelligence},
+  booktitle={Artificial Intelligence},
+  volume={303},
+  pages={103649},
+  eprint={2012.13635},
+  eprinttype={arxiv},
   selected={true},
-  inspirehep_id = {3255}
+  year={2022},
+  code = {https://github.com/logictensornetworks/logictensornetworks},
+  abstract={Artificial Intelligence agents are required to learn from their surroundings and to reason about the knowledge that has been learned in order to make decisions. While state-of-the-art learning from data typically uses sub-symbolic distributed representations, reasoning is normally useful at a higher level of abstraction with the use of a first-order logic language for knowledge representation. As a result, attempts at combining symbolic AI and neural computation into neural-symbolic systems have been on the increase. In this paper, we present Logic Tensor Networks (LTN), a neurosymbolic formalism and computational model that supports learning and reasoning through the introduction of a many-valued, end-to-end differentiable first-order logic called Real Logic as a representation language for deep learning. We show that LTN provides a uniform language for the specification and the computation of several AI tasks such as data clustering, multi-label classification, relational learning, query answering, semi-supervised learning, regression and embedding learning. We implement and illustrate each of the above tasks with a number of simple explanatory examples using TensorFlow 2.},
+  publisher={Elsevier}
 }
 
-@article{einstein1905molekularkinetischen,
-  title={{\"U}ber die von der molekularkinetischen Theorie der W{\"a}rme geforderte Bewegung von in ruhenden Fl{\"u}ssigkeiten suspendierten Teilchen},
-  author={Einstein, A.},
-  journal={Annalen der physik},
-  volume={322},
+@inproceedings{badreddine2021extending,
+  abbr = {NeSy},
+  title={Extending Real Logic with Aggregate Functions.},
+  author={Badreddine, Samy and Spranger, Michael},
+  booktitle={NeSy},
+  pages={115--125},
+  year={2021}
+}
+
+@incollection{serafini2021logic,
+  abbr={Book chapter},
+  title={Logic tensor networks: Theory and applications},
+  author={Serafini, Luciano and d’Avila Garcez, Artur and Badreddine, Samy and Donadello, Ivan and Spranger, Michael and Bianchi, Federico},
+  booktitle={Neuro-Symbolic Artificial Intelligence: The State of the Art},
+  pages={370--394},
+  year={2021},
+  publisher={IOS Press}
+}
+
+@article{choi2023kitchenscale,
+  abbr={Expert Syst. Appl.},
+  title={KitchenScale: Learning to predict ingredient quantities from recipe contexts},
+  author={Choi, Donghee and Gim, Mogan and Badreddine, Samy and Kim, Hajung and Park, Donghyeon and Kang, Jaewoo},
+  journal={Expert Systems with Applications},
+  volume={224},
+  pages={120041},
+  year={2023},
+  publisher={Pergamon}
+}
+
+@inproceedings{hwang2023recipe,
+  abbr={ICCC},
+  title={Recipe 2.0: Information Presentation for AI-Supported Culinary Idea Generation},
+  author={Hwang, Angel and Badreddine, Samy and Gifford, Frederick and Besold, Tarek R},
+  booktitle={Proceedings of the 14th International Conference on Computational Creativity (ICCC)},
+  year={2023}
+}
+
+@inproceedings{el2023s,
+  abbr={NeSy (BEST PAPER)}
+  title={What's Wrong with Gradient-based Complex Query Answering?},
+  author={El Harzli, Ouns and Badreddine, Samy and Besold, Tarek R},
+  booktitle={NeSy},
+  pages={9--18},
+  year={2023}
+}
+
+@article{debnath2023comparing,
+  abbr={Plos one},
+  title={Comparing molecular representations, e-nose signals, and other featurization, for learning to smell aroma molecules},
+  author={Debnath, Tanoy and Badreddine, Samy and Kumari, Priyadarshini and Spranger, Michael},
+  journal={Plos one},
+  volume={18},
   number={8},
-  pages={549--560},
-  year={1905},
-  publisher={Wiley Online Library}
+  pages={e0289881},
+  year={2023},
+  publisher={Public Library of Science San Francisco, CA USA}
 }
 
-@article{einstein1905movement,
-  abbr={Ann. Phys.},
-  title={Un the movement of small particles suspended in statiunary liquids required by the molecular-kinetic theory 0f heat},
-  author={Einstein, A.},
-  journal={Ann. Phys.},
-  volume={17},
-  pages={549--560},
-  year={1905}
+@article{akujuobi2024link,
+  abbr={AIR},
+  title={Link prediction for hypothesis generation: an active curriculum learning infused temporal graph-based approach},
+  author={Akujuobi, Uchenna and Kumari, Priyadarshini and Choi, Jihun and Badreddine, Samy and Maruyama, Kana and Palaniappan, Sucheendra K and Besold, Tarek R},
+  journal={Artificial Intelligence Review},
+  volume={57},
+  number={9},
+  pages={244},
+  year={2024},
+  publisher={Springer Netherlands Dordrecht}
 }
 
-@article{einstein1905electrodynamics,
-  title={On the electrodynamics of moving bodies},
-  author={Einstein, A.},
-  year={1905}
-}
 
-@Article{einstein1905photoelectriceffect,
-  bibtex_show={true},
-  abbr={Ann. Phys.},
-  title="{{\"U}ber einen die Erzeugung und Verwandlung des Lichtes betreffenden heuristischen Gesichtspunkt}",
-  author={Albert Einstein},
-  abstract={This is the abstract text.},
-  journal={Ann. Phys.},
-  volume={322},
-  number={6},
-  pages={132--148},
-  year={1905},
-  doi={10.1002/andp.19053220607},
-  award={Albert Einstein receveid the **Nobel Prize in Physics** 1921 *for his services to Theoretical Physics, and especially for his discovery of the law of the photoelectric effect*},
-  award_name={Nobel Prize}
-}
-
-@book{przibram1967letters,
-  bibtex_show={true},
-  title={Letters on wave mechanics},
-  author={Einstein, Albert and Schrödinger, Erwin and Planck, Max and Lorentz, Hendrik Antoon and Przibram, Karl},
-  year={1967},
-  publisher={Vision},
-  preview={wave-mechanics.gif},
-  abbr={Vision}
-}
