@@ -8,17 +8,17 @@
     "url": "https://sbadredd.github.io/",
     "summary": "I am a Research Scientist at Sony AI in Barcelona, Spain, where I work with complex predictions in biomedical Knowledge Graphs. I am also pursuing my PhD at Fondazione Bruno Kessler in Trento, Italy. My research interests combine Neurosymbolic AI and Probabilistic ML, spanning from foundational aspects such as differentiability and optimization to practical and usable solutions.",
     "location": {
-      "address": "2712 Broadway St",
-      "postalCode": "CA 94115",
-      "city": "San Francisco",
-      "countryCode": "US",
-      "region": "California"
+      "address": "",
+      "postalCode": "",
+      "city": "Barcelona",
+      "countryCode": "ES",
+      "region": ""
     },
     "profiles": [
       {
         "network": "Twitter",
-        "username": "AlbertEinstein",
-        "url": "https://twitter.com/AlbertEinstein"
+        "username": "sbadredd",
+        "url": "https://x.com/sbadredd"
       }
     ]
   },
