@@ -21,4 +21,4 @@ I am a Research Scientist at [Sony AI](https://ai.sony/) in Barcelona, Spain, wh
 
 My research interests combine Neurosymbolic AI and Probabilistic ML, spanning from foundational aspects such as differentiability and optimization to practical and usable solutions. I developed the [Logic Tensor Networks](https://github.com/logictensornetworks/logictensornetworks) library, a TensorFlow codebase for differentiable reasoning with fuzzy logics, which has found applications in various domains. 
 
-Outside of work, aligning well with the stereotypical engineer profile, I enjoy game design and climbing. 
+Outside of work, I enjoy outdoor sports (rock climbing, diving) and game design. 
