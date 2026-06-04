@@ -127,4 +127,59 @@
   publisher={Springer Netherlands Dordrecht}
 }
 
+@inproceedings{badreddine2026where,
+  abbr = {CoLoRAI},
+  title = {Where to Approximate in Neurosymbolic Inference?},
+  author = {Badreddine, Samy and {van Krieken}, Emile and Serafini, Luciano and Vergari, Antonio},
+  booktitle = {CoLoRAI Workshop at the International Conference on Machine Learning (ICML)},
+  year = {2026},
+  selected = {true}
+}
 
+@inproceedings{badreddine2026theoretical,
+  abbr = {ICML},
+  title = {On the Theoretical Limitations of Embedding-based Link Prediction},
+  author = {Badreddine, Samy and {van Krieken}, Emile and Serafini, Luciano},
+  booktitle = {International Conference on Machine Learning (ICML)},
+  year = {2026},
+  eprint = {2506.22271},
+  eprinttype = {arxiv},
+  arxiv = {2506.22271},
+  abstract = {Many knowledge graph embedding (KGE) models for link prediction use powerful encoders. However, they often rely on a simple hidden vector-matrix multiplication to score subject-relation queries against candidate object entities. When the number of entities is larger than the model's embedding dimension, which is often the case in practice by several orders of magnitude, we have a linear output layer with a rank bottleneck. Such bottlenecked layers limit model expressivity. We investigate both theoretically and empirically how rank bottlenecks affect KGEs. We find that, by limiting the set of feasible predictions, rank bottlenecks hurt the ranking accuracy and distribution fidelity of scores. Inspired by the language modelling literature, we propose KGE-MoS, a mixture-based output layer to break rank bottlenecks in many KGEs. Our experiments show that KGE-MoS improves ranking performance of KGE models on large-scale datasets at a low parameter cost.}
+}
+
+@inproceedings{nunes2025rewarding,
+  abbr = {IJCAI},
+  title = {Rewarding Explainability in Drug Repurposing with Knowledge Graphs},
+  author = {Nunes, Susana and Badreddine, Samy and Pesquita, C{\'a}tia},
+  booktitle = {Proceedings of the Thirty-Fourth International Joint Conference on Artificial Intelligence (IJCAI-25)},
+  pages = {4624--4632},
+  year = {2025},
+  doi = {10.24963/ijcai.2025/515},
+  eprint = {2509.02276},
+  eprinttype = {arxiv},
+  arxiv = {2509.02276},
+  code = {https://github.com/liseda-lab/REx},
+  selected = {true},
+  abstract = {Knowledge graphs (KGs) are powerful tools for modelling complex, multi-relational data and supporting hypothesis generation, particularly in applications like drug repurposing. However, for predictive methods to gain acceptance as credible scientific tools, they must ensure not only accuracy but also the capacity to offer meaningful scientific explanations. This paper presents a novel approach REx, for generating scientific explanations based in link prediction in knowledge graphs. It employs reward and policy mechanisms that consider desirable properties of scientific explanation to guide a reinforcement learning agent in the identification of explanatory paths within a KG. The approach further enriches explanatory paths with domain-specific ontologies, ensuring that the explanations are both insightful and grounded in established biomedical knowledge. We evaluate our approach in drug repurposing using three popular knowledge graph benchmarks. The results clearly demonstrate its ability to generate explanations that validate predictive insights against biomedical knowledge and that outperform the state-of-the-art approaches in predictive performance, establishing REx as a relevant contribution to advance AI-driven scientific discovery.}
+}
+
+@inproceedings{besold2025literature,
+  abbr = {AI4X},
+  title = {Literature-based Hypothesis Generation: Predicting the Evolution of Scientific Literature to Support Scientists},
+  author = {Besold, Tarek R and Akujuobi, Uchenna and Badreddine, Samy and Choi, Jihun and Elshazly, H. and Gifford, Frederick and others},
+  booktitle = {AI4X 2025 International Conference},
+  year = {2025}
+}
+
+@article{badreddine2023logltn,
+  abbr = {arXiv},
+  title = {{logLTN}: Differentiable Fuzzy Logic in the Logarithm Space},
+  author = {Badreddine, Samy and Serafini, Luciano and Spranger, Michael},
+  journal = {arXiv preprint arXiv:2306.14546},
+  year = {2023},
+  eprint = {2306.14546},
+  eprinttype = {arxiv},
+  arxiv = {2306.14546},
+  abstract = {The AI community is increasingly focused on merging logic with deep learning to create Neuro-Symbolic (NeSy) paradigms and assist neural approaches with symbolic knowledge. A significant trend in the literature involves integrating axioms and facts in loss functions by grounding logical symbols with neural networks and operators with fuzzy semantics. Logic Tensor Networks (LTN) is one of the main representatives in this category, known for its simplicity, efficiency, and versatility. However, it has been previously shown that not all fuzzy operators perform equally when applied in a differentiable setting. Researchers have proposed several configurations of operators, trading off between effectiveness, numerical stability, and generalization to different formulas. This paper presents a configuration of fuzzy operators for grounding formulas end-to-end in the logarithm space. Our goal is to develop a configuration that is more effective than previous proposals, able to handle any formula, and numerically stable. To achieve this, we propose semantics that are best suited for the logarithm space and introduce novel simplifications and improvements that are crucial for optimization via gradient-descent. We use LTN as the framework for our experiments, but the conclusions of our work apply to any similar NeSy framework. Our findings, both formal and empirical, show that the proposed configuration outperforms the state-of-the-art and that each of our modifications is essential in achieving these results.}
+}
