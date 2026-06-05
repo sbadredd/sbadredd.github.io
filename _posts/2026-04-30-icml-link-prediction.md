@@ -22,8 +22,8 @@ TL;DR: Let's focus on decoders, not just encoders! 💡
                 frameborder="0"
                 scrolling="no"
                 style="width: 100%; height: 680px; border: none;"
-                title="Link prediction bottleneck visualization"></iframe>
+                title="Link prediction bottleneck visualisation"></iframe>
     </div>
 </div>
 
-For more visualizations of bottlenecks in output layers (classification and rankings which we also discuss in the paper), check also [the website of Andreas Grivas](https://grv.unargmaxable.ai/viz) !
+For more visualisations of bottlenecks in output layers (classification and rankings which we also discuss in the paper), check also [the website of Andreas Grivas](https://grv.unargmaxable.ai/viz) !
