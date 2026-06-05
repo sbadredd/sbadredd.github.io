@@ -21,7 +21,7 @@ TL;DR: Let's focus on decoders, not just encoders! 💡
         <iframe src="{{ '/assets/html/icml-link-prediction.html' | relative_url }}"
                 frameborder="0"
                 scrolling="no"
-                style="width: 100%; height: 680px; border: none;"
+                style="width: 100%; aspect-ratio: 1020 / 660; border: none;"
                 title="Link prediction bottleneck visualisation"></iframe>
     </div>
 </div>

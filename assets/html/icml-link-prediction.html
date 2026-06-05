@@ -19,8 +19,10 @@
   *{box-sizing:border-box}
   html,body{margin:0;height:100%}
   body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:16px;
-    -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;min-height:100%}
-  .deck{flex:1;max-width:1020px;width:100%;margin:0 auto;padding:26px 26px 8px;display:flex;flex-direction:column}
+    -webkit-font-smoothing:antialiased;overflow:hidden;
+    display:flex;align-items:center;justify-content:center}
+  .deck{width:1020px;height:660px;flex:0 0 auto;padding:26px 26px 8px;display:flex;flex-direction:column;
+    transform-origin:center center}
   .stage{flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;
     overflow:hidden;min-height:470px;display:flex;flex-direction:column;justify-content:center;position:relative}
   .frametitle{font-size:24px;font-weight:600;line-height:1.4;text-align:center;
@@ -158,6 +160,7 @@
 <script>
 (function(){
 "use strict";
+var scale=1;
 var E=[[1.5,0.4],[-0.3,1.6],[-1.6,-0.2],[0.2,-1.5]];
 var DCOL=[[0x2E,0x6F,0xB8],[0x8A,0x55,0xC9],[0xE0,0x98,0x2E],[0xC7,0x45,0x7A]];
 var NAMES=["arthritis","asthma","migraine","fever"];
@@ -224,12 +227,12 @@ var curSlot=null;
 function mount(slot){if(curSlot===slot){resize3d();return;}slot.appendChild(c3d);labels.forEach(function(l){slot.appendChild(l.el);});curSlot=slot;resize3d();}
 function unmount(){if(c3d.parentNode)c3d.parentNode.removeChild(c3d);labels.forEach(function(l){if(l.el.parentNode)l.el.parentNode.removeChild(l.el);});curSlot=null;}
 function resize3d(){if(!curSlot)return;var w=curSlot.clientWidth,h=curSlot.clientHeight;if(!w||!h)return;
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(w,h,false);
+  renderer.setPixelRatio(Math.min(devicePixelRatio*scale,2.5));renderer.setSize(w,h,false);
   var aspect=w/h;cam.aspect=aspect;var fitR=1.55,t=Math.tan(42*Math.PI/360);
   cam.position.z=Math.max(fitR/t,fitR/(t*aspect))+0.15;cam.updateProjectionMatrix();}
 
 var c2d=document.getElementById("c2d"),ctx=c2d.getContext("2d"),sweep=null;
-function resize2d(){var w=c2d.clientWidth,h=c2d.clientHeight,dpr=Math.min(devicePixelRatio,2);
+function resize2d(){var w=c2d.clientWidth,h=c2d.clientHeight,dpr=Math.min(devicePixelRatio*scale,2.5);
   c2d.width=w*dpr;c2d.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
 function h2px(u,v,w,h){var pd=28;return[pd+(u+R)/(2*R)*(w-2*pd),h-pd-(v+R)/(2*R)*(h-2*pd)];}
 function draw2d(){var w=c2d.clientWidth,h=c2d.clientHeight;ctx.clearRect(0,0,w,h);
@@ -306,9 +309,11 @@ function loop(){requestAnimationFrame(loop);var dt=clock.getDelta();
       l.el.style.left=((v.x*0.5+0.5)*w)+"px";l.el.style.top=((-v.y*0.5+0.5)*h)+"px";l.el.style.opacity=v.z<1?1:0;});
     renderer.render(scene,cam);}
 }
-window.addEventListener("resize",function(){resize3d();resize2d();draw2d();});
+var deckEl=document.querySelector(".deck");
+function fit(){scale=Math.min(innerWidth/1020,innerHeight/660);deckEl.style.transform="scale("+scale+")";}
+window.addEventListener("resize",function(){fit();resize3d();resize2d();draw2d();});
 
-show(0);loop();
+fit();show(0);loop();
 })();
 </script>
 </body>
