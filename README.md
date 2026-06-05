@@ -22,6 +22,26 @@
 
 </div>
 
+## Running locally
+
+Requires Ruby 3.x (via [rbenv](https://github.com/rbenv/rbenv)) and ImageMagick (`brew install imagemagick`).
+
+One-time setup:
+
+```bash
+rbenv local 3.3.5      # uses the version pinned in .ruby-version
+gem install bundler
+bundle install
+```
+
+Start the dev server (with live reload):
+
+```bash
+bundle exec jekyll serve --livereload
+```
+
+Then open <http://localhost:4000>. Edits rebuild automatically; press `Ctrl-C` to stop.
+
 ## User community
 
 The vibrant community of **al-folio** users is growing!
