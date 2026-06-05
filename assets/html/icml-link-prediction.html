@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Theoretical Limitations of Embedding-based Link Prediction — slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<style>
+  :root{
+    --paper:#F4F4F6; --card:#FFFFFF; --ink:#202024; --muted:#6E6E76;
+    --line:#E4E4E8; --line2:#C7C7CE;
+    --coral:#D8602F; --teal:#13A088;
+    --d0:#2E6FB8; --d1:#8A55C9; --d2:#E0982E; --d3:#C7457A;
+    --font:"Montserrat",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:var(--paper);color:var(--ink);font-family:var(--font);font-size:16px;
+    -webkit-font-smoothing:antialiased;display:flex;flex-direction:column;min-height:100%}
+  .deck{flex:1;max-width:1020px;width:100%;margin:0 auto;padding:26px 26px 8px;display:flex;flex-direction:column}
+  .stage{flex:1;background:var(--card);border:1px solid var(--line);border-radius:16px;
+    overflow:hidden;min-height:470px;display:flex;flex-direction:column;justify-content:center;position:relative}
+  .frametitle{font-size:28px;font-weight:600;line-height:1.4;text-align:center;
+    flex:0 0 auto;height:140px;padding:6px 52px 14px;display:flex;align-items:flex-end;justify-content:center}
+  .frametitle>div{width:100%}
+  .frametitle .n{color:var(--coral);margin-right:6px}
+  .frametitle em,.botnote em{font-style:normal;font-weight:600;color:#C02879}
+  .frametitle code{font-family:var(--font);font-weight:500;font-size:.92em;background:#EDEDF0;padding:1px 7px;border-radius:6px}
+  .scenes{flex:0 0 auto;height:400px;position:relative;overflow:hidden}
+  .frametitle,.scenes{transition:opacity .5s ease}
+  .stage.fading .frametitle,.stage.fading .scenes{opacity:0}
+  .scene{position:absolute;inset:0;display:none;align-items:center;justify-content:center}
+  .scene.on{display:flex}
+  #sceneGraph svg{width:100%;height:100%}
+
+  .flow{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:100%;padding:18px 24px 150px}
+  @media(max-width:840px){.flow{flex-direction:column;gap:6px}}
+  .qbox .pill{font-size:14px;font-weight:500;background:#F0F0F3;border:1px solid var(--line2);
+    border-radius:10px;padding:10px 13px;display:inline-block;white-space:nowrap}
+  .qbox .pill b{color:var(--coral);font-weight:600}
+  .arrow{display:flex;flex-direction:column;align-items:center;gap:5px;min-width:120px}
+  .arrow .lab{font-size:17px;font-weight:500;color:var(--muted);text-align:center;line-height:1.3;max-width:160px}
+  .arrow .ln{position:relative;width:100%;height:2px;background:var(--line2)}
+  .arrow .ln::after{content:"";position:absolute;right:-1px;top:-4px;border-left:8px solid var(--line2);
+    border-top:5px solid transparent;border-bottom:5px solid transparent}
+  @media(max-width:840px){.arrow .ln{width:2px;height:30px}
+    .arrow .ln::after{right:-4px;top:auto;bottom:-1px;border-left:5px solid transparent;
+      border-right:5px solid transparent;border-top:8px solid var(--line2);border-bottom:none}}
+  .embed{width:200px;height:200px;border:1px solid var(--line);border-radius:12px;position:relative;flex:0 0 auto}
+  .embed .tg{position:absolute;top:8px;left:0;right:0;text-align:center;font-size:15px;font-weight:500;color:var(--muted)}
+  #c2d{width:100%;height:100%;display:block}
+  .simslot{flex:1 1 auto;align-self:center;display:flex;flex-direction:column;min-width:230px}
+  .simplot{flex:0 0 auto;height:150px;position:relative}
+  .simcap{flex:0 0 auto;text-align:center;font-size:16px;font-weight:500;color:var(--muted);padding:36px 0 0}
+
+  #sceneSimplex .bigsim{width:100%;height:100%;position:relative}
+  .kchip{position:absolute;top:14px;left:50%;transform:translateX(-50%);font-size:18px;font-weight:600;
+    color:var(--ink);background:rgba(255,255,255,.85);padding:5px 16px;border-radius:20px;border:1px solid var(--line)}
+  .kchip b{color:var(--teal);font-weight:700}
+
+  .v-label{position:absolute;font-size:13px;font-weight:600;transform:translate(-50%,-50%);
+    pointer-events:none;white-space:nowrap;z-index:2;padding:0 4px;border-radius:5px;background:rgba(255,255,255,.72)}
+
+  .figdiag{display:flex;flex-direction:row;align-items:center;justify-content:center;gap:30px;width:100%;height:100%;padding:10px 46px 104px}
+  .fig{margin:0;width:46%}
+  .fig img{width:100%;height:auto;border:1px solid var(--line);border-radius:8px;display:block}
+  .fig figcaption{font-size:16px;font-weight:500;color:var(--muted);margin-top:10px;text-align:center}
+  .botnote{position:absolute;left:46px;right:46px;bottom:16px;text-align:center;
+    font-size:28px;font-weight:600;line-height:1.4;color:var(--ink)}
+
+  .close{text-align:center;padding:24px}
+  .close h2{font-size:24px;font-weight:600;margin:0 0 16px}
+  .close .meta{font-size:15px;font-weight:500;color:var(--muted);line-height:1.85}
+  .close .qr{width:118px;height:118px;margin:20px auto 0;border:1px dashed var(--line2);border-radius:12px;
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;color:var(--muted);text-align:center}
+
+  .nav{max-width:1020px;width:100%;margin:0 auto;padding:14px 26px 24px;display:flex;align-items:center;gap:12px}
+  button{font-family:var(--font);font-size:15px;font-weight:600;color:var(--ink);background:var(--card);
+    border:1px solid var(--line2);border-radius:9px;padding:8px 16px;cursor:pointer}
+  button:hover{background:#F0F0F3} button:disabled{opacity:.4;cursor:default}
+  .dots{position:absolute;right:24px;bottom:18px;z-index:5;display:flex;gap:9px}
+  .dot{width:10px;height:10px;border-radius:50%;background:var(--line2);transition:background .25s,transform .25s}
+  .dot.on{background:#C02879;transform:scale(1.25)}
+</style>
+</head>
+<body>
+<div class="deck">
+  <div class="stage">
+    <div class="frametitle"><div id="capTxt"></div></div>
+    <div class="dots" id="dots"></div>
+    <div class="scenes">
+
+    <div class="scene" id="sceneGraph">
+      <svg viewBox="0 0 760 430" preserveAspectRatio="xMidYMid meet" font-family="Montserrat, sans-serif">
+        <defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+          <path d="M1 1L9 5L1 9" fill="none" stroke="#ABABB4" stroke-width="1.6" stroke-linecap="round"/></marker></defs>
+        <rect x="48" y="180" width="166" height="64" rx="12" fill="#F0F0F3" stroke="#C7C7CE"/>
+        <text x="131" y="218" text-anchor="middle" font-size="17" font-weight="600" fill="#202024">ibuprofen</text>
+        <line x1="216" y1="212" x2="448" y2="212" stroke="#ABABB4" stroke-width="1.6" marker-end="url(#ah)"/>
+        <text x="332" y="200" font-size="18" font-weight="500" font-style="italic" fill="#6E6E76" text-anchor="middle">treats?</text>
+        <rect x="470" y="66"  width="190" height="58" rx="12" fill="#FFFFFF" stroke="#2E6FB8" stroke-width="2"/>
+        <text x="565" y="101" text-anchor="middle" font-size="17" font-weight="600" fill="#2E6FB8">arthritis</text>
+        <rect x="470" y="144" width="190" height="58" rx="12" fill="#FFFFFF" stroke="#8A55C9" stroke-width="2"/>
+        <text x="565" y="179" text-anchor="middle" font-size="17" font-weight="600" fill="#8A55C9">asthma</text>
+        <rect x="470" y="222" width="190" height="58" rx="12" fill="#FFFFFF" stroke="#E0982E" stroke-width="2"/>
+        <text x="565" y="257" text-anchor="middle" font-size="17" font-weight="600" fill="#E0982E">migraine</text>
+        <rect x="470" y="300" width="190" height="58" rx="12" fill="#FFFFFF" stroke="#C7457A" stroke-width="2"/>
+        <text x="565" y="335" text-anchor="middle" font-size="17" font-weight="600" fill="#C7457A">fever</text>
+      </svg>
+    </div>
+
+    <div class="scene" id="sceneFlow">
+      <div class="flow">
+        <div class="qbox"><span class="pill">(<b>ibuprofen</b>, <b>treats</b>, ?)</span></div>
+        <div class="arrow"><div class="lab">encode</div><div class="ln"></div></div>
+        <div class="embed"><span class="tg">2D embedding space</span><canvas id="c2d"></canvas></div>
+        <div class="arrow"><div class="lab">score</div><div class="ln"></div></div>
+        <div class="simslot" id="flowSim">
+          <div class="simplot" id="flowPlot"></div>
+          <div class="simcap">4D probability simplex</div>
+        </div>
+      </div>
+      <div class="botnote">The final output layer is usually <em>linear</em>, which rigidly limits the reachable solutions (here illustrated on distributions).</div>
+    </div>
+
+    <div class="scene" id="sceneTable">
+      <div class="figdiag">
+        <figure class="fig fig-a">
+          <img src="necessary-dimensions.png" alt="Necessary embedding dimensions table">
+          <figcaption>Necessary embedding dimensions for different objectives</figcaption>
+        </figure>
+        <figure class="fig fig-b">
+          <img src="sufficient-dimensions-for-signsrankings.png" alt="Sufficient embedding dimension table">
+          <figcaption>Sufficient embedding dimension for sign and ranking objectives</figcaption>
+        </figure>
+      </div>
+      <div class="botnote">See paper for details. Necessary embedding dimensions quickly become <em>unrealistic</em> for large graphs.</div>
+    </div>
+
+    <div class="scene" id="sceneSimplex">
+      <div class="bigsim" id="bigSim"><div class="kchip" id="kval">K = <b>1</b></div></div>
+      <div class="botnote">Equipping models with this layer <em>improves their performance</em> on large and dense datasets.</div>
+    </div>
+
+    </div>
+  </div>
+  <div class="nav">
+    <button id="prev">&larr;</button>
+    <button id="next">&rarr;</button>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script>
+(function(){
+"use strict";
+var E=[[1.5,0.4],[-0.3,1.6],[-1.6,-0.2],[0.2,-1.5]];
+var DCOL=[[0x2E,0x6F,0xB8],[0x8A,0x55,0xC9],[0xE0,0x98,0x2E],[0xC7,0x45,0x7A]];
+var NAMES=["arthritis","asthma","migraine","fever"];
+function mb(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);
+  t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function sm(v){var m=Math.max.apply(null,v),e=[],s=0,i;for(i=0;i<v.length;i++){e[i]=Math.exp(v[i]-m);s+=e[i];}
+  for(i=0;i<e.length;i++)e[i]/=s;return e;}
+function lg(h){return [h[0]*E[0][0]+h[1]*E[0][1],h[0]*E[1][0]+h[1]*E[1][1],
+  h[0]*E[2][0]+h[1]*E[2][1],h[0]*E[3][0]+h[1]*E[3][1]];}
+var COMP=[{M:[[1,0],[0,1]],b:[0,0],w:[0,0]}];
+function mixP(h,K){if(K<=1)return sm(lg(h));var c,comps=[],lw=[],o;
+  for(var kk=0;kk<K;kk++){c=COMP[kk];var f=[c.M[0][0]*h[0]+c.M[0][1]*h[1]+c.b[0],c.M[1][0]*h[0]+c.M[1][1]*h[1]+c.b[1]];
+    comps.push(sm(lg(f)));lw.push(c.w[0]*h[0]+c.w[1]*h[1]);}
+  var pi=sm(lw),out=[0,0,0,0];for(kk=0;kk<K;kk++)for(o=0;o<4;o++)out[o]+=pi[kk]*comps[kk][o];return out;}
+var V=[[1,1,1],[1,-1,-1],[-1,1,-1],[-1,-1,1]].map(function(p){return p.map(function(x){return x*1.15;});});
+function toXYZ(p){var x=0,y=0,z=0;for(var o=0;o<4;o++){x+=p[o]*V[o][0];y+=p[o]*V[o][1];z+=p[o]*V[o][2];}return[x,y,z];}
+
+var c3d=document.createElement("canvas");c3d.style.width="100%";c3d.style.height="100%";c3d.style.display="block";
+var renderer=new THREE.WebGLRenderer({canvas:c3d,antialias:true,alpha:true});renderer.setClearColor(0xffffff,1);
+var scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(42,1,0.1,100);cam.position.set(0,0.2,5.2);
+scene.add(new THREE.AmbientLight(0xffffff,0.8));
+var dl=new THREE.DirectionalLight(0xffffff,0.5);dl.position.set(2,3,4);scene.add(dl);
+var grp=new THREE.Group();scene.add(grp);
+var ep=[],pr=[[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]];
+pr.forEach(function(e){ep.push(V[e[0]][0],V[e[0]][1],V[e[0]][2],V[e[1]][0],V[e[1]][1],V[e[1]][2]);});
+var eg=new THREE.BufferGeometry();eg.setAttribute("position",new THREE.Float32BufferAttribute(ep,3));
+grp.add(new THREE.LineSegments(eg,new THREE.LineBasicMaterial({color:0xC7C7CE})));
+
+var GN=40,R=3.0;
+function build(K){var pos=new Float32Array(GN*GN*3),col=new Float32Array(GN*GN*3),idx=0;
+  for(var i=0;i<GN;i++)for(var j=0;j<GN;j++){var u=-R+2*R*i/(GN-1),v=-R+2*R*j/(GN-1),p=mixP([u,v],K),xyz=toXYZ(p);
+    pos[idx*3]=xyz[0];pos[idx*3+1]=xyz[1];pos[idx*3+2]=xyz[2];
+    var r=0,g=0,b=0;for(var o=0;o<4;o++){r+=p[o]*DCOL[o][0];g+=p[o]*DCOL[o][1];b+=p[o]*DCOL[o][2];}
+    col[idx*3]=r/255;col[idx*3+1]=g/255;col[idx*3+2]=b/255;idx++;}
+  return{pos:pos,col:col};}
+var ixA=[];for(var a=0;a<GN-1;a++)for(var bq=0;bq<GN-1;bq++){var p0=a*GN+bq;ixA.push(p0,p0+GN,p0+1,p0+1,p0+GN,p0+GN+1);}
+
+var TH=[[1.9,-1.4],[-2.1,1.3],[0.4,2.4],[-1.2,-1.9]];
+var targets=TH.map(function(){var m=new THREE.Mesh(new THREE.SphereGeometry(0.05,16,16),
+  new THREE.MeshBasicMaterial({color:0x202024}));m.visible=false;grp.add(m);return{xyz:[0,0,0],mesh:m,r:0};});
+
+var SURF={};
+function regen(seed){
+  var rnd=mb(seed);COMP=[{M:[[1,0],[0,1]],b:[0,0],w:[0,0]}];
+  for(var k=1;k<8;k++)COMP.push({M:[[1.5*(rnd()-.5)+0.9,1.8*(rnd()-.5)],[1.8*(rnd()-.5),1.5*(rnd()-.5)+0.9]],
+    b:[2.6*(rnd()-.5),2.6*(rnd()-.5)],w:[2.8*(rnd()-.5),2.8*(rnd()-.5)]});
+  SURF={};[1,2,4,8].forEach(function(K){SURF[K]=build(K);});
+  targets.forEach(function(t,i){t.xyz=toXYZ(mixP(TH[i],8));t.mesh.position.set(t.xyz[0],t.xyz[1],t.xyz[2]);t.r=0;});
+}
+regen(3);
+
+var cPos=new Float32Array(SURF[1].pos),cCol=new Float32Array(SURF[1].col);
+var sg=new THREE.BufferGeometry();
+sg.setAttribute("position",new THREE.BufferAttribute(cPos,3));
+sg.setAttribute("color",new THREE.BufferAttribute(cCol,3));sg.setIndex(ixA);sg.computeVertexNormals();
+var sMat=new THREE.MeshStandardMaterial({vertexColors:true,side:THREE.DoubleSide,transparent:true,opacity:0,roughness:0.72});
+grp.add(new THREE.Mesh(sg,sMat));
+var qDot=new THREE.Mesh(new THREE.SphereGeometry(0.06,18,18),new THREE.MeshBasicMaterial({color:0xD8602F}));
+qDot.position.set.apply(qDot.position,toXYZ(mixP([1.1,0.7],1)));qDot.visible=false;grp.add(qDot);
+
+var labels=[];NAMES.forEach(function(n,i){var el=document.createElement("div");el.className="v-label";el.textContent=n;
+  el.style.color="rgb("+DCOL[i][0]+","+DCOL[i][1]+","+DCOL[i][2]+")";labels.push({el:el,i:i});});
+var curSlot=null;
+function mount(slot){if(curSlot===slot){resize3d();return;}slot.appendChild(c3d);labels.forEach(function(l){slot.appendChild(l.el);});curSlot=slot;resize3d();}
+function unmount(){if(c3d.parentNode)c3d.parentNode.removeChild(c3d);labels.forEach(function(l){if(l.el.parentNode)l.el.parentNode.removeChild(l.el);});curSlot=null;}
+function resize3d(){if(!curSlot)return;var w=curSlot.clientWidth,h=curSlot.clientHeight;if(!w||!h)return;
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(w,h,false);
+  var aspect=w/h;cam.aspect=aspect;var fitR=1.55,t=Math.tan(42*Math.PI/360);
+  cam.position.z=Math.max(fitR/t,fitR/(t*aspect))+0.15;cam.updateProjectionMatrix();}
+
+var c2d=document.getElementById("c2d"),ctx=c2d.getContext("2d"),sweep=null;
+function resize2d(){var w=c2d.clientWidth,h=c2d.clientHeight,dpr=Math.min(devicePixelRatio,2);
+  c2d.width=w*dpr;c2d.height=h*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+function h2px(u,v,w,h){var pd=28;return[pd+(u+R)/(2*R)*(w-2*pd),h-pd-(v+R)/(2*R)*(h-2*pd)];}
+function draw2d(){var w=c2d.clientWidth,h=c2d.clientHeight;ctx.clearRect(0,0,w,h);
+  ctx.strokeStyle="#ECECEF";ctx.lineWidth=1;
+  for(var g=-3;g<=3;g++){var A=h2px(g,-3,w,h),B=h2px(g,3,w,h),C=h2px(-3,g,w,h),D=h2px(3,g,w,h);
+    ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(C[0],C[1]);ctx.lineTo(D[0],D[1]);ctx.stroke();}
+  if(sweep){ctx.fillStyle="rgba(216,96,47,0.15)";for(var i=0;i<sweep.length;i++){var s=h2px(sweep[i][0],sweep[i][1],w,h);
+    ctx.beginPath();ctx.arc(s[0],s[1],2.6,0,7);ctx.fill();}}
+  var q=h2px(qPos[0],qPos[1],w,h);ctx.fillStyle="#D8602F";ctx.beginPath();ctx.arc(q[0],q[1],6,0,7);ctx.fill();}
+
+var SC={graph:document.getElementById("sceneGraph"),flow:document.getElementById("sceneFlow"),
+  table:document.getElementById("sceneTable"),simplex:document.getElementById("sceneSimplex")};
+var SLIDES=[
+ {scene:"graph",txt:'Link prediction answers <code>(ibuprofen, treats, ?)</code> queries to fill gaps in a knowledge graph.'},
+ {scene:"flow",txt:'Neural models map <em>low-dimensional</em> embeddings of the queries <em>to high-dimensional</em> answer spaces.'},
+ {scene:"table",txt:'We show theoretical results about<br>(i) <em>universality</em>: are <em>all</em> solutions reachable?<br>(ii) <em>realisability</em>: are the <em>ground-truth</em> ones reachable?'},
+ {scene:"simplex",txt:'We consider a non-linear output layer using <em>mixtures</em> to break the bottleneck at a low parameter cost.'}
+];
+var step=0,K=1,opacityTarget=0,allowReach=false,kTimer=null,qAnim=false,qPos=[1.1,0.7];
+var dots=document.getElementById("dots");
+SLIDES.forEach(function(){var d=document.createElement("div");d.className="dot";dots.appendChild(d);});
+function makeSweep(){var arr=[],n=14;for(var i=0;i<n;i++)for(var j=0;j<n;j++)arr.push([-R+2*R*i/(n-1),-R+2*R*j/(n-1)]);return arr;}
+function setKLabel(){document.getElementById("kval").innerHTML="K = <b>"+K+"</b>";}
+function stopK(){if(kTimer){clearInterval(kTimer);kTimer=null;}}
+function startK(){stopK();var seq=[1,2,4,8],p=0,seed=4;K=1;setKLabel();
+  kTimer=setInterval(function(){p=(p+1)%seq.length;if(p===0){seed++;regen(seed);}K=seq[p];setKLabel();},900);}
+
+function show(i){
+  step=i;var s=SLIDES[i];
+  document.getElementById("capTxt").innerHTML=s.txt;
+  document.getElementById("prev").disabled=(i===0);
+  document.getElementById("next").disabled=false;
+  for(var d=0;d<dots.children.length;d++)dots.children[d].className="dot"+(d===i?" on":"");
+  for(var key in SC)SC[key].className="scene"+(SC[key]===SC[s.scene]?" on":"");
+  stopK();allowReach=false;qAnim=false;
+  if(s.scene==="flow"){
+    mount(document.getElementById("flowPlot"));grp.scale.setScalar(0.82);grp.position.set(0,0,0);resize2d();
+    K=1;opacityTarget=0.92;qDot.visible=true;qAnim=true;targets.forEach(function(t){t.mesh.visible=false;});
+    sweep=makeSweep();draw2d();
+  } else if(s.scene==="simplex"){
+    mount(document.getElementById("bigSim"));grp.scale.setScalar(0.6);grp.position.set(0,0.35,0);opacityTarget=0.92;qDot.visible=false;allowReach=false;
+    targets.forEach(function(t){t.mesh.visible=false;});startK();
+  } else { unmount(); }
+}
+var transitioning=false,stageEl=document.querySelector(".stage");
+function go(i){if(transitioning||i<0||i>=SLIDES.length||i===step)return;transitioning=true;
+  stageEl.classList.add("fading");
+  setTimeout(function(){show(i);stageEl.classList.remove("fading");
+    setTimeout(function(){transitioning=false;},500);},500);}
+document.getElementById("next").onclick=function(){go((step+1)%SLIDES.length);};
+document.getElementById("prev").onclick=function(){go(step-1);};
+window.addEventListener("keydown",function(e){if(e.key==="ArrowRight")document.getElementById("next").click();
+  if(e.key==="ArrowLeft")document.getElementById("prev").click();});
+
+function lerp(d,s,t){for(var i=0;i<d.length;i++)d[i]+=(s[i]-d[i])*t;}
+var clock=new THREE.Clock();
+function loop(){requestAnimationFrame(loop);var dt=clock.getDelta();
+  grp.rotation.y+=dt*0.28;grp.rotation.x=Math.sin(performance.now()/4200)*0.12;grp.updateMatrixWorld();
+  var tg=SURF[K];lerp(cPos,tg.pos,0.16);lerp(cCol,tg.col,0.16);
+  sg.attributes.position.needsUpdate=true;sg.attributes.color.needsUpdate=true;sg.computeVertexNormals();
+  sMat.opacity+=(opacityTarget-sMat.opacity)*0.12;
+  if(qAnim){var qt=performance.now()/1000;qPos[0]=1.25*Math.cos(qt*0.55);qPos[1]=1.25*Math.sin(qt*0.8);
+    qDot.position.set.apply(qDot.position,toXYZ(mixP(qPos,1)));draw2d();}
+  qDot.scale.setScalar(1+0.18*Math.sin(performance.now()/300));
+  targets.forEach(function(t){if(!t.mesh.visible)return;var rr=0;
+    if(allowReach){var best=1e9;for(var i=0;i<cPos.length;i+=27){var dx=cPos[i]-t.xyz[0],dy=cPos[i+1]-t.xyz[1],dz=cPos[i+2]-t.xyz[2],dd=dx*dx+dy*dy+dz*dz;if(dd<best)best=dd;}rr=best<0.05?1:0;}
+    t.r+=(rr-t.r)*0.15;
+    t.mesh.material.color.setRGB(0.137+(0.075-0.137)*t.r,0.129+(0.627-0.129)*t.r,0.118+(0.533-0.118)*t.r);
+    t.mesh.scale.setScalar(1+0.4*t.r);});
+  if(curSlot){var w=curSlot.clientWidth,h=curSlot.clientHeight;
+    labels.forEach(function(l){var v=new THREE.Vector3(V[l.i][0]*1.12,V[l.i][1]*1.12,V[l.i][2]*1.12);
+      v.applyMatrix4(grp.matrixWorld);v.project(cam);
+      l.el.style.left=((v.x*0.5+0.5)*w)+"px";l.el.style.top=((-v.y*0.5+0.5)*h)+"px";l.el.style.opacity=v.z<1?1:0;});
+    renderer.render(scene,cam);}
+}
+window.addEventListener("resize",function(){resize3d();resize2d();draw2d();});
+
+show(0);loop();
+})();
+</script>
+</body>
+</html>
