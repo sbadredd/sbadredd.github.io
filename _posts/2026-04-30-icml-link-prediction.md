@@ -26,4 +26,4 @@ TL;DR: Let's focus on decoders, not just encoders! 💡
     </div>
 </div>
 
-For more illustrations of bottlenecks in output layers (classification and rankings which we also discuss in the paper), check also [the website of Andreas Grivas](https://grv.unargmaxable.ai/viz) !
+For more visualizations of bottlenecks in output layers (classification and rankings which we also discuss in the paper), check also [the website of Andreas Grivas](https://grv.unargmaxable.ai/viz) !
